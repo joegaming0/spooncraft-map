@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Minecraft World Map</title>
+  <meta name="description" content="Minecraft World Map">
+  <meta name="author" content="anvilmapper">
+  
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
+  
+  <style>
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .leaflet-container {
+      background: black;
+    }
+    #map {
+      width: auto;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script>
+  
+
+  // Set default options for all tilemaps
+  var options = {
+    attribution: 'anvilmapper',
+    maxZoom: 7,
+    minZoom: 0,
+    zoomOffset: 0,
+    zoomReverse: false,
+    tileSize: 256,
+    //noWrap: true,
+    //bounds: mapBounds, 
+    //continuousWorld: true,
+  };
+
+  // Create tilemaps for switching
+  var overworld = L.tileLayer('images/z{z}/{x},{y}.png', options);
+
+  var baseMaps = {
+    "Overworld": overworld
+  };
+
+  // Map creation with crs.simple (suitable for game maps). Direct
+  // lat/lng <-> pixel conversion
+  var map = L.map('map', {
+    maxZoom: 4,
+    minZoom: 0,
+    crs: L.CRS.Simple,
+    layers: [overworld],
+  }).setView([0, 0], 1);
+
+  L.control.layers(baseMaps).addTo(map);
+  L.marker([0, 0]).addTo(map).bindPopup("Spawn");
+  L.marker([91, -799]).addTo(map).bindPopup("Oasis");
+  L.marker([161, 120]).addTo(map).bindPopup("Old shopping district");
+  L.marker([-101, 155]).addTo(map).bindPopup("Public village");
+  L.marker([-50, 883]).addTo(map).bindPopup("Snowville");
+  </script>
+
+</body>
+</html>
